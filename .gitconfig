@@ -1,0 +1,33 @@
+[alias]
+  st = status
+  co = checkout
+  ci = commit
+  br = branch
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  filelog = log -u
+  fl = log -u
+  amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+  ignore =!([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
+  this = !git init && git add . && git commit -m \"initial commit\"
+  start = checkout -b
+  save = "!save() { export tmp_branch=`git branch | grep '* ' | tr -d '* '` && git checkout master && git rebase $tmp_branch && git push origin master; git checkout $tmp_branch; unset tmp_branch; }; save"
+  finish = "!finish() { export tmp_branch=`git branch | grep '* ' | tr -d '* '` && git checkout master && git rebase $tmp_branch && git push origin master && git branch -d $tmp_branch; unset tmp_branch; }; finish"
+  merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+  merge-log  = "!git log `git merge-span .. $1`"
+  merge-diff = "!git diff `git merge-span ... $1`"
+  update = "!update() { git fetch && git pull --rebase; }; update"
+  delete = branch -d
+  report = "log --author='Alejandro Andres' --since='1 sunday ago' --until='now' --format='%Cgreen%ci%Creset %s%Creset' --no-merges"
+  last = "log -1 --pretty=format:'%Cgreen%ci %Cred%cr%Creset'"
+
+[user]
+  name = Alejandro Andres
+  email = fuzzy.alej@gmail.com
+
+[color]
+  ui = true
+
+[push]
+  default = matching
