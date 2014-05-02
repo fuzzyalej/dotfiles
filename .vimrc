@@ -1,7 +1,5 @@
-" Vundle
-" Install vundle: git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-" Install bundles: vim +BundleInstall +qall
-"
+"'''''''"
+" VUNDLE
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -84,7 +82,8 @@ set splitbelow                             " Horizontal splits below
 set gdefault                               " don't need /g after :s or :g
 
 " Switch between buffers
-nmap <tab> <C-w><C-w>
+" nmap <tab> <C-w><C-w>
+" DISABLED, YOU ARE LAZY WITH THIS
 
 " Remember last location in file
 if has("autocmd")
@@ -168,6 +167,12 @@ map  <leader>7 7gt
 map  <leader>8 8gt
 map  <leader>9 9gt
 
+" Buffer navigation
+map bn :bn<CR>
+map bp :bp<CR>
+
+map <leader>e :CtrlP .<CR>
+
 """"""""""""""""""""""""""""""""""""""""""
 " Fri Mar 9: Cool split auto-resizing (via the great Gary Bernhardt)
 set winwidth=84
@@ -203,6 +208,7 @@ let g:airline_powerline_fonts = 1
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Plugin key-mappings.
 inoremap <expr><C-g>     neocomplete#undo_completion()
 inoremap <expr><C-l>     neocomplete#complete_common_string()
 
@@ -251,3 +257,30 @@ endfunction
 if has("autocmd")
   autocmd VimEnter * :call SetupCtrlP()
 endif
+
+" Rename current file
+" thx to codegram
+function! RenameFile()
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'))
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
+endfunction
+map <leader>n :call RenameFile()<cr>
+
+" Map nohl to <leader>space
+noremap <leader><space><space> :nohl <return>
+
+set wildignore+=*.swp,*.zip,*.pyc
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/]((tmp)|\.(git))$',
+      \ 'file': '\v\.(pyc)$',
+\ }
+" Make CtrlP use ag to list the files. SO MUCH FASTER
+let g:ctrlp_user_commnad = 'ag %s -l --nocolor -g ""'
+
+" Remove delay after pressing escape and clearing the visual selection
+set timeoutlen=1000 ttimeoutlen=0
