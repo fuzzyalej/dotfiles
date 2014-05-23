@@ -16,6 +16,7 @@ Bundle 'kchmck/vim-coffee-script'
 Bundle 'skwp/greplace.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Shougo/neocomplete.vim'
+Bundle 'rizzatti/dash.vim'
 
 filetype plugin indent on
 "'''''''"
