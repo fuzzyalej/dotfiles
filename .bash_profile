@@ -1,26 +1,20 @@
-# Load the default profile
-[[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
-
-#RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-#Bash completion
+# Bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
 fi
 
-#git bash integration
+# Git bash integration
 export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWUNTRACKEDFILES=true
 
-#Git Config
+# Git config
 git config --global alias.st status
 git config --global alias.co checkout
 git config --global alias.ci commit
 git config --global alias.br branch
 git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
 
-#Aliases
+# Aliases
 ## GIT
 alias ga='git add'
 alias gp='git push'
@@ -46,13 +40,14 @@ alias gmf='git merge --ff-only'
 alias gwc='git whatchanged -p --abbrev-commit --pretty=medium'
 
 ## General goodies
+alias ls='ls -G'
 alias emacs="open /Applications/Emacs.app"
 alias grep='grep --color'
-alias clj='rlwrap clj'
 alias tunnel='sshuttle -D --pidfile=/tmp/sshuttle.pid --dns 0/0 -r'
 alias stoptunnel='[[ -f /tmp/sshuttle.pid ]] && kill `cat /tmp/sshuttle.pid`'
 alias map="xargs -n1"
 alias password="ruby -e 'require \"securerandom\";puts SecureRandom.base64[0...-2]'"
+alias clj='rlwrap clj'
 alias sbcl='rlwrap /usr/local/bin/sbcl'
 alias pgstart='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias pgstop='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
@@ -61,7 +56,9 @@ alias get="curl -i -X GET"
 alias put="curl -i -X PUT"
 
 # Servers
-# -- not for your eyes --
+# --- for my eyes only ---
+
+# --- end ---
 
 
 # Nice bash indicator for background jobs
@@ -77,3 +74,10 @@ set completion-ignore-case on
 
 # ENV Configuration
 export EDITOR='vim'
+
+# Paths
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/sbin:$PATH
+
+# RVM crap
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

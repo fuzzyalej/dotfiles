@@ -5,18 +5,18 @@ call vundle#rc()
 
 " let Vundle manage Vundle
 Bundle 'bling/vim-airline'
-Bundle 'd11wtq/tomorrow-theme-vim'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-fugitive'
 Bundle 'kien/ctrlp.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'scrooloose/syntastic'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'skwp/greplace.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Shougo/neocomplete.vim'
-Bundle 'rizzatti/dash.vim'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-fireplace'
+
+Bundle 'kchmck/vim-coffee-script'
 
 filetype plugin indent on
 "'''''''"
@@ -172,8 +172,6 @@ map  <leader>9 9gt
 map bn :bn<CR>
 map bp :bp<CR>
 
-map <leader>e :CtrlP .<CR>
-
 """"""""""""""""""""""""""""""""""""""""""
 " Fri Mar 9: Cool split auto-resizing (via the great Gary Bernhardt)
 set winwidth=84
@@ -186,11 +184,11 @@ set winheight=999
 
 "highlights
 au BufNewFile,BufRead *.hamlc :set ft=haml
+au BufNewFile,BufRead *.erb :set ft=eruby.html
 au BufNewFile,BufRead *.rabl :set ft=ruby
 au BufNewFile,BufRead *.eco :set ft=html
 au BufNewFile,BufRead *.ejs :set ft=html
 au BufNewFile,BufRead *.scm :nmap <leader>r :!racket -r %<CR>
-au BufNewFile,BufRead *.clj :set ft=clojure<CR> :nmap <leader>r :!clj %<CR>
 au BufNewFile,BufRead *.rb :nmap <leader>r :!rspec %<CR>
 au BufNewFile,BufRead *.rb :nmap <leader>R :!rspec<CR>
 au BufNewFile,BufRead *.js :nmap <leader>r :!node %<CR>
@@ -233,12 +231,6 @@ nnoremap U :GundoToggle<CR>
 :cnoremap <Esc>f <S-Right>
 :cnoremap <Esc>d <S-right><Delete>
 :cnoremap <C-g>  <C-c>
-
-"Unite.vim
-nnoremap <C-p> :Unite file_rec/async<cr>
-nnoremap <space>/ :Unite grep:.<cr>
-nnoremap <space>y :Unite history/yanks<cr>
-nnoremap <space>s :Unite -quick-match buffer<cr>
 
 "Spelling
 nmap <silent> <leader>s :set spell!<CR>
@@ -285,3 +277,12 @@ let g:ctrlp_user_commnad = 'ag %s -l --nocolor -g ""'
 
 " Remove delay after pressing escape and clearing the visual selection
 set timeoutlen=1000 ttimeoutlen=0
+
+" Rainbow parenthesis
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" Dangerous, remove automatically all trailing whitespaces on save
+autocmd BufWritePre * :%s/\s\+$//e

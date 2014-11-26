@@ -14,6 +14,10 @@
   start = checkout -b
   save = "!save() { export tmp_branch=`git branch | grep '* ' | tr -d '* '` && git checkout master && git rebase $tmp_branch && git push origin master; git checkout $tmp_branch; unset tmp_branch; }; save"
   finish = "!finish() { export tmp_branch=`git branch | grep '* ' | tr -d '* '` && git checkout master && git rebase $tmp_branch && git push origin master && git branch -d $tmp_branch; unset tmp_branch; }; finish"
+
+  # `git merge-log` shows the commits that were introduced in a given merge
+  # # `git merge-diff` shows the actual changes that were introduced by a given merge
+  # # Both commands accept an optional commitish; if ommitted, the last merge commit is used
   merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
   merge-log  = "!git log `git merge-span .. $1`"
   merge-diff = "!git diff `git merge-span ... $1`"
