@@ -1,28 +1,22 @@
 "'''''''"
 " VUNDLE
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
-Bundle 'bling/vim-airline'
-Bundle 'gmarik/vundle'
-Bundle 'kien/ctrlp.vim'
-Bundle 'sjl/gundo.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'skwp/greplace.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Shougo/neocomplete.vim'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-fireplace'
+Plugin 'bling/vim-airline'
+Plugin 'kien/ctrlp.vim'
+Plugin 'sjl/gundo.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'skwp/greplace.vim'
 
-Bundle 'kchmck/vim-coffee-script'
+call vundle#end()
 
 filetype plugin indent on
+syntax on
 "'''''''"
 
 set t_Co=256
-
 
 " Changes leader key
 let mapleader                      = ","
@@ -86,19 +80,6 @@ set gdefault                               " don't need /g after :s or :g
 " nmap <tab> <C-w><C-w>
 " DISABLED, YOU ARE LAZY WITH THIS
 
-" Remember last location in file
-if has("autocmd")
-   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-   \| exe "normal g'\"" | endif
-endif
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-"
-syntax on
-
-filetype plugin indent on
-
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
 
@@ -111,7 +92,6 @@ endif
 " Numbers
 set number
 
-
 " Tab completion options
 set wildmode=list:longest,list:full
 set complete=.,w,t
@@ -122,34 +102,8 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-
 " Use the mouse"
 set mouse=a
-
-" by Elias (WeRelax)
-" 13 de Octubre 2011: CoffeeScript correctness check
-function! CheckCoffeeSyntax (file)
-  let l:js = system('coffee -cp ' . a:file)
-  let l:error = matchstr(l:js, '^Error: .* line \d*')
-  if empty(l:error)
-    return
-  else
-    :echohl ErrorMsg | echo l:error | echohl None
-  endif
-endfunction
-autocmd! BufWritePost *.coffee :call CheckCoffeeSyntax(expand("%:p"))
-"-------
-
-" Sort and Unique .gitignore file"
-function! SortAndUnique()
-  %sort u
-endfunction
-autocmd! BufWritePost .gitignore :call SortAndUnique()
-
-"Cleaning options for gvim/mvim"
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
-set guioptions-=r  "remove right-hand scroll bar"
 
 set hlsearch
 
@@ -172,16 +126,6 @@ map  <leader>9 9gt
 map bn :bn<CR>
 map bp :bp<CR>
 
-""""""""""""""""""""""""""""""""""""""""""
-" Fri Mar 9: Cool split auto-resizing (via the great Gary Bernhardt)
-set winwidth=84
-" We have to have a winheight bigger than we want to set winminheight. But
-" if we set winheight to be huge before winminheight, the winminheight set will
-" fail.
-set winheight=10
-set winminheight=10
-set winheight=999
-
 "highlights
 au BufNewFile,BufRead *.hamlc :set ft=haml
 au BufNewFile,BufRead *.erb :set ft=eruby.html
@@ -202,14 +146,6 @@ nmap Y :'<,'>!pbcopy<CR>
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-
-"NeoComplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
 
 " The looks of it
 set guifont=Inconsolata\ for\ Powerline:h14
@@ -236,21 +172,6 @@ nnoremap U :GundoToggle<CR>
 nmap <silent> <leader>s :set spell!<CR>
 set spelllang=en_US
 
-" CtrlP auto cache clearing.
-" ----------------------------------------------------------------------------
-function! SetupCtrlP()
-  if exists("g:loaded_ctrlp") && g:loaded_ctrlp
-    augroup CtrlPExtension
-      autocmd!
-      autocmd FocusGained  * CtrlPClearCache
-      autocmd BufWritePost * CtrlPClearCache
-    augroup END
-  endif
-endfunction
-if has("autocmd")
-  autocmd VimEnter * :call SetupCtrlP()
-endif
-
 " Rename current file
 " thx to codegram
 function! RenameFile()
@@ -264,9 +185,6 @@ function! RenameFile()
 endfunction
 map <leader>n :call RenameFile()<cr>
 
-" Map nohl to <leader>space
-noremap <leader><space><space> :nohl <return>
-
 set wildignore+=*.swp,*.zip,*.pyc
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]((tmp)|\.(git))$',
@@ -277,12 +195,6 @@ let g:ctrlp_user_commnad = 'ag %s -l --nocolor -g ""'
 
 " Remove delay after pressing escape and clearing the visual selection
 set timeoutlen=1000 ttimeoutlen=0
-
-" Rainbow parenthesis
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
 " Dangerous, remove automatically all trailing whitespaces on save
 autocmd BufWritePre * :%s/\s\+$//e
