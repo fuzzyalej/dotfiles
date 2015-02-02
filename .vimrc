@@ -9,6 +9,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'sjl/gundo.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'skwp/greplace.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
 
 call vundle#end()
 
@@ -138,6 +140,7 @@ au BufNewFile,BufRead *.rb :nmap <leader>R :!rspec<CR>
 au BufNewFile,BufRead *.js :nmap <leader>r :!node %<CR>
 au BufNewFile,BufRead *.json :%!python -m json.tool<CR>
 au BufNewFile,BufRead *.asd :set ft=lisp
+au BufNewFile,BufRead *.jbuilder :set ft=ruby
 
 "Copy to clipboard
 nmap Y :'<,'>!pbcopy<CR>
@@ -198,3 +201,7 @@ set timeoutlen=1000 ttimeoutlen=0
 
 " Dangerous, remove automatically all trailing whitespaces on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+" JS goodies
+let javascript_enable_domhtmlcss = 1
+let g:syntastic_check_on_open=1
