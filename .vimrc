@@ -138,7 +138,6 @@ au BufNewFile,BufRead *.scm :nmap <leader>r :!racket -r %<CR>
 au BufNewFile,BufRead *.rb :nmap <leader>r :!rspec %<CR>
 au BufNewFile,BufRead *.rb :nmap <leader>R :!rspec<CR>
 au BufNewFile,BufRead *.js :nmap <leader>r :!node %<CR>
-au BufNewFile,BufRead *.json :%!python -m json.tool<CR>
 au BufNewFile,BufRead *.asd :set ft=lisp
 au BufNewFile,BufRead *.jbuilder :set ft=ruby
 
